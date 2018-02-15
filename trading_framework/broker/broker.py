@@ -1,3 +1,6 @@
+from enum import Enum
+
+
 class TypeOrder(Enum):
     MKT='market'
     LMT='limit'
@@ -5,12 +8,14 @@ class TypeOrder(Enum):
 
 
 class Order:
-    symbol
-    typeOrder
-    price
-    volume
+    symbol = None
+    typeOrder = TypeOrder.MKT
+    price = None
+    volume = None
 
-    def __init__(self,symbol,typeOrder,price,volume) :
+    def __init__(self, symbol=symbol, typeOrder=typeOrder, price=price, volume=volume):
+        if symbol is None:
+            raise Exception('symbol must be != None %s' % symbol)
         self.symbol=symbol
         self.typeOrder=typeOrder
         self.price=price

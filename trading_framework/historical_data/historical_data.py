@@ -1,4 +1,5 @@
 import datetime.datetime
+from enum import Enum
 
 from trading_framework.statics import DEFAULT_START_DATE_DOWNLOAD
 
