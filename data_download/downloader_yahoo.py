@@ -15,7 +15,6 @@ def download(symbol, start, resolution="1 hour"):
         external_data = wf.get_data_yahoo_intraday(symbol=symbol, start=start)
     else:
         external_data = wf.get_data_yahoo(symbol, start=start)
-        external_data = external_data.resample("1T").last().ffill()
 
     # convert the data into a QTPyLib-compatible
     # data will be saved in ~/Desktop/AAPL.csv

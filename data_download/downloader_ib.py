@@ -9,7 +9,7 @@ import datetime
 def download(symbol, start, resolution="1 hour"):
     # load your existing market data as Pandas DataFrame.
     # here, we'll download 1-min intraday data from Google
-    startStr = datetime.datetime.strftime(start, format='%d/%m/%Y')
+    startStr = datetime.datetime.strftime(start, format='%Y-%m-%d %H:%M:%S')  # YYYY-MM-DD [HH:MM:SS[.MS]
     symbolIB = (symbol, "STK", "SMART", "USD", "", 0.0,)
     # instrument, start, resolution = "1 min", blotter = None, output_path = None)
     external_data = wf.get_data_ib(symbolIB, start=startStr, resolution=resolution)
