@@ -111,7 +111,11 @@ if __name__ == "__main__":
     if not BACKTEST_ENABLE:
         strategy = MLAlgo(
             instruments=[(symbol, "STK", "SMART", "USD", "", 0.0,)],
-            resolution="1D"
+            resolution="1D",
+            ibport=7497,
+            blotter='robotrader',
+            log=settings.logsPath + nameOfStrategy + '.log'
+
         )
         strategy.run()
     else:
@@ -124,6 +128,9 @@ if __name__ == "__main__":
             end='2018-02-16',
             output=settings.backtestData + nameOfStrategy + '.csv',
             data=settings.csvData,
+            log=settings.logsPath + nameOfStrategy + '.log',
+            ibport=7497,
+            blotter='robotrader'
 
         )
         strategy.run()

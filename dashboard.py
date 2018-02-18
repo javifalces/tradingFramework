@@ -10,6 +10,7 @@ class Dashboard(Reports):
 if __name__ == "__main__":
     dashboard = Dashboard(
         port=5000,
-        blotter="MainBlotter"
+        blotter="robotrader",
+        password=""
     )
     dashboard.run()

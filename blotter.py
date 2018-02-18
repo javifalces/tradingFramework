@@ -7,6 +7,7 @@ class MainBlotter(Blotter):
 
 if __name__ == "__main__":
     blotter = MainBlotter(
+        name="robotrader",
         dbhost="localhost",  # MySQL server
         dbname="qtpy",  # MySQL database
         dbuser="robotrader",  # MySQL username
