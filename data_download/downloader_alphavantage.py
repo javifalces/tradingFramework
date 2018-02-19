@@ -7,12 +7,23 @@ import datetime
 '''resolution::  1 sec, 5 secs, 15 secs, 30 secs, 1 min (default), 2 mins, 3 mins, 5 mins, 15 mins, 30 mins, 1 hour, 1 day'''
 
 
-def get_alphavantage_intraday(symbol, start, resolution='1hour'):
+def get_alphavantage(symbol, start, resolution='1hour'):
     from alpha_vantage.timeseries import TimeSeries
     import settings
+    INTERVAL = {}
+    INTERVAL['1 min'] = '1 min'
+    INTERVAL['5 mins'] = '5 min'
+    INTERVAL['15 mins'] = '15 min'
+    INTERVAL['30 mins'] = '30 min'
+    INTERVAL['1 hour'] = '60 min'
+
 
     ts = TimeSeries(key=settings.alpha_vantage_token, retries=5, output_format='pandas', indexing_type='date')
-    data_d, meta_data_d = ts.get_daily_adjusted(symbol=symbol, outputsize='full')
+    if resolution == '1 day':
+        data_d, meta_data_d = ts.get_daily_adjusted(symbol=symbol, outputsize='full')
+    else:
+        # intervals='1min', '5min', '15min', '30min', '60min'
+        data_d, meta_data_d = ts.get_intraday(symbol=symbol, interval=INTERVAL[resolution], outputsize='full')
 
     data_d.rename(columns={'5. adjusted close': 'close'}, inplace=True)
     data_d.rename(columns={'1. open': 'open'}, inplace=True)
@@ -34,10 +45,8 @@ def download(symbol, start, resolution="1 hour"):
     # here, we'll download 1-min intraday data from Google
     # startStr = datetime.datetime.strftime(start,format='%d/%m/%Y')
     # endStr = datetime.datetime.strftime(end, format='%d/%m/%Y')
-    if resolution != '1 day':
-        external_data = get_alphavantage_intraday(symbol=symbol, start=start, resolution='1 hour')
-    else:
-        external_data = wf.get_data_yahoo(symbol, start=start)
+    external_data = get_alphavantage(symbol=symbol, start=start, resolution=resolution)
+
 
     # convert the data into a QTPyLib-compatible
     # data will be saved in ~/Desktop/AAPL.csv
